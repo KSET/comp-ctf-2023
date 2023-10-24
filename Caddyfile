@@ -1,0 +1,24 @@
+(proxy-domain) {
+	tls internal
+
+	reverse_proxy localhost:3000
+}
+
+(proxy-studio) {
+	tls internal
+
+	reverse_proxy localhost:3001
+}
+
+import ./dev/Caddyfile.*
+
+www.comp-ctf-dov-2023.loc,
+comp-ctf-dov-2023.loc {
+	import proxy-domain
+	import comp-ctf-extend-domain-*
+}
+
+studio.comp-ctf-dov-2023.loc {
+	import proxy-studio
+	import comp-ctf-extend-studio-*
+}

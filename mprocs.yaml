@@ -1,0 +1,9 @@
+---
+procs:
+  app:
+    cmd: ["yarn", "dev"]
+  caddy:
+    cmd: ["doas", "caddy", "run"]
+  db-studio:
+    cmd: ["yarn", "db:studio", "--verbose"]
+    autostart: false
