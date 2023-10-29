@@ -5,10 +5,14 @@ import {
   primaryKey,
   text,
   timestamp,
+  varchar,
 } from "drizzle-orm/pg-core";
 import { type AdapterAccount } from "next-auth/adapters";
 
 import { env } from "~/env.mjs";
+import { type UserRole } from "~/lib/auth/role";
+
+export { UserRole } from "~/lib/auth/role";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -26,6 +30,7 @@ export const users = pgTable("user", {
   email: text("email").notNull(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
   image: text("image"),
+  role: varchar("role", { length: 50 }).$type<UserRole>(),
 });
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -68,8 +73,6 @@ export const sessions = pgTable("session", {
     .references(() => users.id, { onDelete: "cascade" }),
   expires: timestamp("expires", { mode: "date" }).notNull(),
   createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  userAgent: text("userAgent"),
-  fromIp: text("fromIp"),
 });
 
 export const sessionsRelations = relations(sessions, ({ one }) => ({

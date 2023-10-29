@@ -8,6 +8,13 @@
       "when": 1698600779426,
       "tag": "0000_easy_rogue",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1698601003876,
+      "tag": "0001_left_lilith",
+      "breakpoints": true
     }
   ]
 }
