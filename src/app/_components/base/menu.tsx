@@ -1,9 +1,16 @@
 "use client";
 
 import { Menu, Transition } from "@headlessui/react";
-import { type FC, Fragment, type ReactElement, type ReactNode } from "react";
+import {
+  type FC,
+  Fragment,
+  type ReactElement,
+  type ReactNode,
+  useMemo,
+} from "react";
 
 import { cn } from "~/lib/util/class";
+import { type Falsy } from "~/types/util";
 
 export type AppMenuItem =
   | ((props: {
@@ -11,7 +18,8 @@ export type AppMenuItem =
       disabled: boolean;
       close: () => void;
     }) => ReactElement)
-  | ReactElement;
+  | ReactElement
+  | Falsy;
 
 export type AppMenuItems = AppMenuItem[] | AppMenuItem[][];
 
@@ -26,9 +34,15 @@ export const AppMenu: FC<
   }
 > = (props) => {
   const isNested = Array.isArray(props.items?.[0]);
-  const items = (
-    (isNested ? props.items : [props.items]) as AppMenuItem[][]
-  ).filter((group) => group.length > 0);
+  const items = useMemo(() => {
+    const nestedItems = (
+      isNested ? props.items : [props.items]
+    ) as AppMenuItem[][];
+
+    return nestedItems
+      .map((group) => group.filter(Boolean))
+      .filter((group) => group.filter(Boolean).length > 0);
+  }, [isNested, props.items]);
 
   return (
     <Menu
