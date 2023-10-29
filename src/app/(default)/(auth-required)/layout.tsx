@@ -1,11 +1,10 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
+import { UserDropdown } from "~/app/_components/auth/user-dropdown";
 import { Logo } from "~/assets/images/logo";
 import { getServerAuthSession } from "~/server/auth";
 import { type NextAppLayoutProps } from "~/types/next";
-
-import { UserDropdown } from "./layout.client";
 
 export default async function LayoutDefaultAuth({
   children,
