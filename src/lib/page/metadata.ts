@@ -1,8 +1,5 @@
-import { type Metadata } from "next";
-import tailwindConfigFile from "tailwind.config";
-import resolveConfig from "tailwindcss/resolveConfig";
-
-const tailwindConfig = resolveConfig(tailwindConfigFile);
+import { type Metadata, type Viewport } from "next";
+import { black } from "tailwind.config";
 
 const siteName = "Comp CTF";
 
@@ -13,6 +10,13 @@ const titleTemplate = {
 
 const description =
   "Mali CTF za studente tehničkih fakulteta. Sastavljen i organiziran od strane Računarske sekcije KSET-a.";
+
+export const BASE_VIEWPORT = {
+  colorScheme: "dark",
+  themeColor: black,
+  width: "device-width",
+  initialScale: 1,
+} satisfies Viewport;
 
 export const BASE_METADATA = {
   metadataBase: new URL("https://ctf.comp.kset.org"),
@@ -47,7 +51,6 @@ export const BASE_METADATA = {
   alternates: {
     canonical: "/",
   },
-  colorScheme: "dark",
   applicationName: siteName,
   referrer: "origin-when-cross-origin",
   robots: {
@@ -59,13 +62,6 @@ export const BASE_METADATA = {
   },
   icons: {
     icon: "/favicon.ico",
-  },
-  themeColor: (
-    tailwindConfig.theme as unknown as { colors: Record<string, string> }
-  ).colors.primary,
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
   },
   appleWebApp: {
     statusBarStyle: "black-translucent",

@@ -16,9 +16,6 @@ const config = {
   experimental: {
     adjustFontFallbacks: true,
     adjustFontFallbacksWithSizeAdjust: true,
-    logging: {
-      fullUrl: true,
-    },
     serverSourceMaps: true,
     typedRoutes: true,
   },
