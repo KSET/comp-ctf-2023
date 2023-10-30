@@ -1,4 +1,5 @@
 import "~/assets/styles/tailwind.css";
+import "~/assets/styles/react-aria.css";
 import "~/assets/styles/global.css";
 
 import { epilogue, spaceMono } from "~/assets/font";

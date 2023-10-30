@@ -1,29 +1,32 @@
 "use client";
 
-import { Menu, Transition } from "@headlessui/react";
+import { intersperse } from "rambdax";
+import { type FC, type ReactNode, useMemo } from "react";
 import {
-  type FC,
-  Fragment,
-  type ReactElement,
-  type ReactNode,
-  useMemo,
-} from "react";
+  Button,
+  Item,
+  type ItemProps,
+  Menu,
+  MenuTrigger,
+  OverlayArrow,
+  Popover,
+  Separator,
+} from "react-aria-components";
 
 import { cn } from "~/lib/util/class";
 import { type Falsy } from "~/types/util";
 
+import $style from "./menu.module.scss";
+
 export type AppMenuItem =
-  | ((props: {
-      active: boolean;
-      disabled: boolean;
-      close: () => void;
-    }) => ReactElement)
-  | ReactElement
+  | ItemProps
+  //
   | Falsy;
 
-export type AppMenuItems = AppMenuItem[] | AppMenuItem[][];
+export type AppMenuItems = AppMenuItem[] | (AppMenuItem[] | Falsy)[];
 
 export type AppMenuProps = {
+  label: string;
   trigger: ReactNode;
   items?: AppMenuItems;
 };
@@ -39,47 +42,54 @@ export const AppMenu: FC<
       isNested ? props.items : [props.items]
     ) as AppMenuItem[][];
 
-    return nestedItems
+    const filtered = nestedItems
       .map((group) => group.filter(Boolean))
       .filter((group) => group.filter(Boolean).length > 0);
+
+    return intersperse([null], filtered as (ItemProps | null)[][]).flat();
   }, [isNested, props.items]);
 
   return (
-    <Menu
-      as="div"
-      className={cn("relative inline-block text-left", props.className)}
-    >
-      <Menu.Button as="div">{props.trigger}</Menu.Button>
-      <Transition
-        as={Fragment}
-        enter="transition ease-out duration-100"
-        enterFrom="transform opacity-0 scale-95"
-        enterTo="transform opacity-100 scale-100"
-        leave="transition ease-in duration-75"
-        leaveFrom="transform opacity-100 scale-100"
-        leaveTo="transform opacity-0 scale-95"
-      >
-        <Menu.Items className="absolute right-0 mt-1 w-56 origin-top-right rounded-md border-off-text bg-off-text text-background shadow-lg ring-1 ring-black/5 focus:outline-none">
-          <div className="divide-y divide-background">
-            {items.map((group, groupIndex) => {
+    <MenuTrigger>
+      <Button aria-label="Korisnički meni" className="flex items-center">
+        {props.trigger}
+      </Button>
+
+      <Popover className={$style.popover}>
+        <OverlayArrow>
+          <svg height={12} viewBox="0 0 12 12" width={12}>
+            <path d="M0 0 L6 6 L12 0" />
+          </svg>
+        </OverlayArrow>
+
+        <Menu
+          className={cn(
+            "w-56 rounded-md border-off-text bg-off-text p-2 text-background shadow-lg",
+            props.className,
+          )}
+        >
+          {items.map((props, i) => {
+            const id = `item-${i}`;
+
+            if (!props) {
               return (
-                // eslint-disable-next-line react/no-array-index-key
-                <div key={groupIndex} className="p-1 text-right">
-                  {group.map((item, itemIndex) => {
-                    return (
-                      // eslint-disable-next-line react/no-array-index-key
-                      <Menu.Item key={`${groupIndex}-${itemIndex}`}>
-                        {item}
-                      </Menu.Item>
-                    );
-                  })}
-                </div>
+                <Separator
+                  key={id}
+                  className="mx-1 my-0.5 h-px bg-background"
+                />
               );
-            })}
-          </div>
-          <div className="absolute right-2 top-0 h-0 w-0 -translate-y-full border-4 border-t-0 border-transparent border-b-inherit content-['_']" />
-        </Menu.Items>
-      </Transition>
-    </Menu>
+            }
+
+            return (
+              <Item
+                key={id}
+                className="group flex w-full items-center justify-end rounded-md p-2 text-sm text-background hover:bg-primary hover:text-off-text"
+                {...props}
+              />
+            );
+          })}
+        </Menu>
+      </Popover>
+    </MenuTrigger>
   );
 };

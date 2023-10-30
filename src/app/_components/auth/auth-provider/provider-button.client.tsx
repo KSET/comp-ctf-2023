@@ -2,17 +2,36 @@
 
 import { useRouter } from "next/navigation";
 import { type FC } from "react";
+import { Button, type ButtonProps } from "react-aria-components";
 
 import { type Provider } from "~/lib/server/api/auth/providers";
 import { api } from "~/lib/trpc/react";
+import { type ClassName, cn } from "~/lib/util/class";
 
 import { ProviderIcon } from "./provider-icon";
 
-export const AppDisconnectProviderButton: FC<{
-  provider: Provider;
-  className?: string;
-  disabled?: boolean;
-}> = (props) => {
+type AppLoginButtonBaseProps = ButtonProps & {
+  className?: ClassName;
+};
+
+export const AppLoginButtonBase: FC<AppLoginButtonBaseProps> = (props) => {
+  return (
+    <Button
+      type="button"
+      {...props}
+      className={cn(
+        "flex w-full items-center gap-8 rounded-full border-2 border-background bg-off-text p-4 text-lg font-bold text-background hover:border-text hover:bg-text disabled:border-background disabled:bg-neutral-300 disabled:text-neutral-600",
+        props.className,
+      )}
+    />
+  );
+};
+
+export const AppDisconnectProviderButton: FC<
+  AppLoginButtonBaseProps & {
+    provider: Provider;
+  }
+> = (props) => {
   const router = useRouter();
   const disconnectMutation = api.auth.providers.disconnect.useMutation({
     onSuccess() {
@@ -20,16 +39,13 @@ export const AppDisconnectProviderButton: FC<{
     },
   });
 
-  const disabled = Boolean(props.disabled) || disconnectMutation.isLoading;
+  const disabled = Boolean(props.isDisabled) || disconnectMutation.isLoading;
 
   return (
-    <button
-      className="flex w-full items-center justify-end gap-8 rounded-full border-2 border-background bg-off-text p-4 text-lg font-bold text-background transition hover:border-text hover:bg-text hover:transition-none disabled:border-background disabled:bg-neutral-300 disabled:text-neutral-600"
-      disabled={disabled}
-      type="button"
-      onClick={(e) => {
-        e.preventDefault();
-
+    <AppLoginButtonBase
+      {...props}
+      isDisabled={disabled}
+      onPress={() => {
         if (!confirm(`Odspoji ${props.provider.name} od računa?`)) {
           return;
         }
@@ -41,6 +57,6 @@ export const AppDisconnectProviderButton: FC<{
     >
       <ProviderIcon className="scale-150" providerId={props.provider.id} />
       <span className="ml-auto">Odspoji {props.provider.name}</span>
-    </button>
+    </AppLoginButtonBase>
   );
 };

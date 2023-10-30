@@ -4,6 +4,7 @@ import { env } from "~/env.mjs";
 import { type Provider } from "~/lib/server/api/auth/providers";
 import { getCurrentPath } from "~/lib/server/pathHack";
 
+import { AppLoginButtonBase } from "./provider-button.client";
 import { ProviderIcon } from "./provider-icon";
 
 export const AppLoginProviderButton: FC<{
@@ -29,19 +30,19 @@ export const AppLoginProviderButton: FC<{
     <form
       key={props.provider.id}
       action={props.provider.signinUrl}
-      className={`flex flex-col gap-4 text-center ${props.className ?? ""}`}
+      className="contents"
       method="POST"
     >
       <input name="callbackUrl" type="hidden" value={url} />
       <input name="csrfToken" type="hidden" value={props.csrfToken} />
-      <button
-        className="flex items-center gap-8 rounded-full border-2 border-background bg-off-text p-4 text-lg font-bold text-background transition hover:border-text hover:bg-text hover:transition-none"
-        disabled={disabled}
+      <AppLoginButtonBase
+        className={props.className}
+        isDisabled={disabled}
         type="submit"
       >
         <ProviderIcon className="scale-150" providerId={props.provider.id} />
         <span className="ml-auto">{props.provider.name}</span>
-      </button>
+      </AppLoginButtonBase>
     </form>
   );
 };

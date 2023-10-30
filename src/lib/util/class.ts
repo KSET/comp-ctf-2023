@@ -1,12 +1,12 @@
 import { type Falsy } from "~/types/util";
 
-type ClassName =
+export type ClassName =
   | string
   | Record<string, boolean>
   // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   | Falsy;
 
-export const cn = (...classes: ClassName[] | ClassName[][]) =>
+export const cn = (...classes: (ClassName | ClassName[])[]) =>
   classes
     .flat()
     .map((x) => {

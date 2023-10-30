@@ -11,3 +11,7 @@ h6 {
 ::selection {
   @apply bg-off-text text-primary;
 }
+
+body {
+  @apply leading-tight tracking-tight;
+}

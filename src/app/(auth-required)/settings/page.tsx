@@ -33,6 +33,7 @@ export default async function PageSettings() {
                     return (
                       <li key={provider.id}>
                         <AppLoginProviderButton
+                          className="border-primary"
                           csrfToken={csrfToken}
                           provider={provider}
                         />
@@ -45,13 +46,14 @@ export default async function PageSettings() {
 
             {linkedProviders.length > 0 ? (
               <section>
-                <h3 className="text-lg">Povezani računi</h3>
+                <h3 className="text-xl">Povezani računi</h3>
                 <ul className="mt-1 max-w-xs space-y-2">
                   {linkedProviders.map((provider) => {
                     return (
                       <li key={provider.id}>
                         <AppDisconnectProviderButton
-                          disabled={linkedProviders.length <= 1}
+                          className="border-primary"
+                          isDisabled={linkedProviders.length <= 1}
                           provider={provider}
                         />
                       </li>
