@@ -14,6 +14,18 @@ export const UserDropdown: FC<{
       [
         ({ active }) => (
           <Link
+            href="/settings"
+            className={`${
+              active ? "bg-primary text-off-text" : "text-background"
+            } group flex w-full items-center justify-end rounded-md p-2 text-sm`}
+          >
+            Postavke
+          </Link>
+        ),
+      ],
+      [
+        ({ active }) => (
+          <Link
             href="/api/auth/signout"
             className={`${
               active ? "bg-primary text-off-text" : "text-background"

@@ -2,6 +2,8 @@ import { getCsrfToken } from "~/lib/server/api/auth/csrf";
 import { listProviders } from "~/lib/server/api/auth/providers";
 import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
 
+import { settingsRouter } from "./settings";
+
 export const pageDataRouter = createTRPCRouter({
   $header: publicProcedure.query(async ({ ctx }) => {
     const providersPromise = listProviders();
@@ -50,4 +52,6 @@ export const pageDataRouter = createTRPCRouter({
       csrfToken: await getCsrfToken(),
     };
   }),
+
+  settings: settingsRouter,
 });
