@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { type FC, type PropsWithChildren } from "react";
 
-import { TRPCReactProvider } from "~/trpc/react";
+import { TRPCReactProvider } from "~/lib/trpc/react";
 
 import { ProvidersClient } from "./providers.client";
 

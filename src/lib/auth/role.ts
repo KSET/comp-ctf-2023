@@ -11,6 +11,6 @@ export const hasRole = <
 >(
   user: TUser,
   role: TRole,
-): user is TUser & { role: TRole } => {
+) => {
   return user.role === role;
 };

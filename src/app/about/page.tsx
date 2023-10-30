@@ -2,9 +2,9 @@ import Link from "next/link";
 
 export default function PageAbout() {
   return (
-    <main className="container flex min-h-screen flex-col gap-4 px-4 py-16">
+    <main className="container flex min-h-screen flex-col gap-4 bg-primary px-4 py-16">
       <h1 className="text-3xl font-bold">O Comp CTF-u</h1>
-      <div className="prose">
+      <div className="prose text-off-text">
         <p>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
           interdum, lacus vitae malesuada mattis, enim arcu rhoncus odio, at
@@ -73,7 +73,7 @@ export default function PageAbout() {
 
       <div className="mt-4">
         <Link
-          className="rounded-md bg-primary p-4 text-2xl font-bold text-white dark:text-black"
+          className="rounded-md bg-background p-4 text-2xl font-bold text-white"
           href="/home"
         >
           Započni

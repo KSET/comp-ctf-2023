@@ -35,7 +35,9 @@ export default async function LayoutDefaultAuth({
           </div>
         </div>
       </header>
-      <main className="flex flex-1 flex-col text-off-text">{children}</main>
+      <main className="container mt-4 flex flex-1 flex-col gap-2 text-off-text">
+        {children}
+      </main>
     </div>
   );
 }

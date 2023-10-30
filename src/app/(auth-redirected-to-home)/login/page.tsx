@@ -6,7 +6,7 @@ import {
 } from "react-icons/si";
 
 import { $metadata } from "~/lib/page/metadata";
-import { api } from "~/trpc/server";
+import { api } from "~/lib/trpc/server";
 
 const idToIcon: Record<string, IconType> = {
   google: IconGoogle,
