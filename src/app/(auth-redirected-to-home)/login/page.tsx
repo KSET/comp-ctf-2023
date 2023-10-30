@@ -1,18 +1,6 @@
-import { type IconType } from "react-icons";
-import { FcGoogle as IconGoogle } from "react-icons/fc";
-import {
-  SiDiscord as IconDiscord,
-  SiGithub as IconGithub,
-} from "react-icons/si";
-
+import { AppLoginProviderButton } from "~/app/_components/auth/auth-provider/provider-button";
 import { $metadata } from "~/lib/page/metadata";
 import { api } from "~/lib/trpc/server";
-
-const idToIcon: Record<string, IconType> = {
-  google: IconGoogle,
-  discord: IconDiscord,
-  github: IconGithub,
-};
 
 export const metadata = $metadata({
   title: "Sign In",
@@ -38,29 +26,13 @@ export default async function PageLogin() {
 
       <div className="flex flex-col gap-[inherit]">
         {providers.map((provider) => {
-          const Icon = idToIcon[provider.id] ?? (() => null);
-
           return (
-            <form
+            <AppLoginProviderButton
               key={provider.id}
-              action={provider.signinUrl}
-              className="flex flex-col gap-4 text-center"
-              method="POST"
-            >
-              <input
-                name="callbackUrl"
-                type="hidden"
-                value="https://comp-ctf.saturn.ji0.li/home"
-              />
-              <input name="csrfToken" type="hidden" value={csrfToken} />
-              <button
-                className="flex items-center gap-8 rounded-full border-2 border-background bg-off-text p-4 text-lg font-bold text-background transition hover:border-text hover:bg-text hover:transition-none"
-                type="submit"
-              >
-                <Icon className="scale-150" />
-                <span className="ml-auto">{provider.name}</span>
-              </button>
-            </form>
+              csrfToken={csrfToken}
+              provider={provider}
+              redirectTo="/home"
+            />
           );
         })}
       </div>

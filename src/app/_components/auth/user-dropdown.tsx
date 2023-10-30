@@ -11,16 +11,18 @@ export const UserDropdown: FC<{
 }> = ({ user }) => {
   const items = useMemo(() => {
     return [
-      ({ active }) => (
-        <Link
-          href="/api/auth/signout"
-          className={`${
-            active ? "bg-primary text-off-text" : "text-background"
-          } group flex w-full items-center justify-end rounded-md p-2 text-sm`}
-        >
-          Odjavi se
-        </Link>
-      ),
+      [
+        ({ active }) => (
+          <Link
+            href="/api/auth/signout"
+            className={`${
+              active ? "bg-primary text-off-text" : "text-background"
+            } group flex w-full items-center justify-end rounded-md p-2 text-sm`}
+          >
+            Odjavi se
+          </Link>
+        ),
+      ],
     ] satisfies AppMenuItems;
   }, []);
 
