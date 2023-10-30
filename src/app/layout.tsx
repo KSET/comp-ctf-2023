@@ -1,5 +1,3 @@
-import "@mantine/core/styles.css";
-import "@mantine/notifications/styles.css";
 import "~/assets/styles/tailwind.css";
 import "~/assets/styles/global.css";
 
