@@ -31,7 +31,7 @@ declare module "next-auth" {
       {
         id: string;
         email: string;
-        role?: UserRole;
+        role?: UserRole | null;
         // ...other properties
       } & DefaultSession["user"]
     >;

@@ -12,6 +12,14 @@ h6 {
   @apply bg-off-text text-primary;
 }
 
+::selection textarea {
+  @apply bg-primary text-off-text;
+}
+
+::selection input {
+  @apply bg-primary text-off-text;
+}
+
 body {
   @apply leading-tight tracking-tight;
 }

@@ -1,6 +1,8 @@
 import { type Metadata, type Viewport } from "next";
 import { black } from "tailwind.config";
 
+import { env } from "~/env.mjs";
+
 const siteName = "Comp CTF";
 
 const titleTemplate = {
@@ -19,7 +21,7 @@ export const BASE_VIEWPORT = {
 } satisfies Viewport;
 
 export const BASE_METADATA = {
-  metadataBase: new URL("https://ctf.comp.kset.org"),
+  metadataBase: new URL(env.APP_PUBLIC_URL),
   title: titleTemplate,
   description,
   keywords: [

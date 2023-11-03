@@ -11,6 +11,7 @@ export const env = createEnv({
   server: {
     APP_LOG_DIR: z.string().default("dev/logs"),
     APP_INTERNAL_URL: z.string().url().nullable().default(null),
+    APP_FILE_STORAGE_DIR: z.string(),
     APP_PUBLIC_URL: z.preprocess(
       // This makes Vercel deployments not fail if you don't set NEXTAUTH_URL
       // Since NextAuth.js automatically uses the VERCEL_URL if present.
@@ -71,6 +72,7 @@ export const env = createEnv({
     APP_LOG_DIR: process.env.APP_LOG_DIR,
     APP_PUBLIC_URL: process.env.APP_PUBLIC_URL,
     APP_INTERNAL_URL: process.env.APP_INTERNAL_URL,
+    APP_FILE_STORAGE_DIR: process.env.APP_FILE_STORAGE_DIR,
     DATABASE_URL: process.env.DATABASE_URL,
     DATABASE_TABLE_NAME_PREFIX: process.env.DATABASE_TABLE_NAME_PREFIX,
     NODE_ENV: process.env.NODE_ENV,

@@ -37,6 +37,8 @@ const config = {
         fixStyle: "inline-type-imports",
       },
     ],
+    "require-await": "off",
+    "@typescript-eslint/require-await": "warn",
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": [
       "error",

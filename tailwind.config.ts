@@ -3,7 +3,7 @@ import { fromPairs, toPairs } from "rambdax";
 import { type Config } from "tailwindcss";
 import defaultConfig from "tailwindcss/defaultConfig";
 import { fontFamily } from "tailwindcss/defaultTheme";
-import reactAriaComponents from "tailwindcss-react-aria-components";
+import reactAriaComponents from "tailwindcss-react-aria-components/src/index";
 
 export const white = "#fff";
 export const offWhite = "#f2f2f2";

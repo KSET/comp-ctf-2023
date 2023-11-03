@@ -1,8 +1,14 @@
 import { getCsrfToken } from "~/lib/server/api/auth/csrf";
 import { listProviders } from "~/lib/server/api/auth/providers";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+import {
+  createTRPCRouter,
+  protectedProcedure,
+  publicProcedure,
+} from "~/server/api/trpc";
 
+import { adminRouter } from "./admin";
 import { settingsRouter } from "./settings";
+import { tasksRouter } from "./tasks";
 
 export const pageDataRouter = createTRPCRouter({
   $header: publicProcedure.query(async ({ ctx }) => {
@@ -44,6 +50,34 @@ export const pageDataRouter = createTRPCRouter({
     };
   }),
 
+  home: protectedProcedure.query(async ({ ctx }) => {
+    const userId = ctx.session.user.id;
+
+    const tasksRaw = await ctx.db.query.tasks.findMany({
+      where: (t, { eq }) => eq(t.hidden, false),
+      with: {
+        solves: {
+          columns: {
+            finishedAt: true,
+          },
+          where: (t, { eq }) => eq(t.userId, userId),
+        },
+      },
+      orderBy: (t, { asc }) => asc(t.position),
+    });
+
+    const tasks = tasksRaw.map((task) => {
+      return {
+        ...task,
+        solved: task.solves[0]?.finishedAt ?? null,
+      };
+    });
+
+    return {
+      tasks,
+    };
+  }),
+
   login: publicProcedure.query(async () => {
     const providers = await listProviders();
 
@@ -54,4 +88,6 @@ export const pageDataRouter = createTRPCRouter({
   }),
 
   settings: settingsRouter,
+  admin: adminRouter,
+  tasks: tasksRouter,
 });

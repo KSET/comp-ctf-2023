@@ -36,10 +36,13 @@ export const AppMenu: FC<
     className?: string;
   }
 > = (props) => {
-  const isNested = Array.isArray(props.items?.[0]);
+  const topFiltered = useMemo(() => {
+    return props.items?.filter(Boolean) ?? [];
+  }, [props.items]);
+  const isNested = Array.isArray(topFiltered[0]);
   const items = useMemo(() => {
     const nestedItems = (
-      isNested ? props.items : [props.items]
+      isNested ? topFiltered : [topFiltered]
     ) as AppMenuItem[][];
 
     const filtered = nestedItems
@@ -47,7 +50,7 @@ export const AppMenu: FC<
       .filter((group) => group.filter(Boolean).length > 0);
 
     return intersperse([null], filtered as (ItemProps | null)[][]).flat();
-  }, [isNested, props.items]);
+  }, [isNested, topFiltered]);
 
   return (
     <MenuTrigger>

@@ -15,6 +15,27 @@
       "when": 1698601003876,
       "tag": "0001_left_lilith",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1698645549999,
+      "tag": "0002_rich_nicolaos",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1698713336669,
+      "tag": "0003_optimal_xavin",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1699001153630,
+      "tag": "0004_tranquil_ronan",
+      "breakpoints": true
     }
   ]
 }

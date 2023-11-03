@@ -9,11 +9,14 @@ export type NextAppPageProps<
 
 export type NextAppLayoutProps<
   TParams extends Record<string, string | string[]> = Record<string, never>,
-  TParallelPages extends Record<string, NextAppPageProps> = Record<
-    string,
-    never
-  >,
-> = TParallelPages & {
+  TParallelPages extends string[] = [],
+> = Record<TParallelPages[number], ReactNode> & {
   params: TParams;
   children: ReactNode;
+};
+
+export type NextAppRouteContext<
+  TParams extends Record<string, string | string[]> = Record<string, never>,
+> = {
+  params: TParams;
 };
