@@ -5,6 +5,7 @@ import { type Task, taskSolves } from "~/server/db/schema";
 
 import { logger } from "../server/log";
 import { generateFlag } from "../task/id";
+import { and, eq } from "drizzle-orm";
 
 type User = Session["user"];
 type UserId = User["id"];
@@ -183,6 +184,7 @@ export const handleFlagVerification = async (ctx: {
       .set({
         finishedAt,
       })
+      .where(and(eq(taskSolves.taskId, taskSolve.taskId), eq(taskSolves.userId, taskSolve.userId)))
       .execute()
       .then(() => {
         return {
