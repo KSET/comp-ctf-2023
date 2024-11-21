@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:13-alpine
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./postgres-data/data:/var/lib/postgresql/data/
+      - ./sql:/docker-entrypoint-initdb.d/
+  app:
+    build:
+      context: .
+      args:
+        APP_FILE_STORAGE_DIR: ${APP_FILE_STORAGE_DIR}
+        APP_PUBLIC_URL: ${APP_PUBLIC_URL}
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    image: comp_ctf_2023
+    env_file:
+      - .env
