@@ -49,3 +49,7 @@ yarn-error.log*
 # dev stuff
 /dev/*
 !/dev/.gitkeep
+
+#postgres
+postgres-data
+sql/ctf_popunjeno.sql
